@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<manifest>
+  <control namespace="AB" constructor="DependentOptionset" version="0.0.8" display-name-key="Dependent Optionset" description-key="Use this control to enable possibility of dependency between optionsets" control-type="standard">
+    <property name="value" display-name-key="Dependent Optionset" description-key="Select Dependent Optionset" of-type="OptionSet" usage="bound" required="true" />
+    <property name="ParentOptionset" display-name-key="Primary Optionset" description-key="Select Primary Optionset" of-type="OptionSet" usage="bound" required="true" />
+    <property name="ConfigurationType" usage="input" of-type="Enum" display-name-key="Configuration of Dependency" description-key="Configuration of Dependency - either plane JSon object or webresource" required="true">
+      <value name="JSon" display-name-key="JSon" description-key="Configuraation added through string input (plain JSon object)" default="true">json</value>
+      <value name="WebResource" display-name-key="WebResource" description-key="Configuration is stored in webresource">webresource</value>
+    </property>
+    <property name="Configuration" display-name-key="Configuration" description-key="Configuration - either JSon object or WebResource that contains configuration" of-type="SingleLine.Text" usage="input" required="true" />
+    <resources>
+      <code path="index.ts" order="1"/>
+      <css path="css/Styles.css" order="1" />
+      <img path="img/DownArrowTransparent.png" />
+    </resources>
+  </control>
+</manifest>
