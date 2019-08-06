@@ -21,3 +21,5 @@ This control is new implementation of classic task with limiting of options avai
   }
 ]
 ```
+4. Open form that you plan to use optionset at, add (if you haven't done that yet) both optionsets, select dependent optionset and click "Change Properties" and choose "Controls" tab in window that poped up.
+5. Click "Add Control..." button, select "Dependent Optionset" in the list of available controls and click "Add".
