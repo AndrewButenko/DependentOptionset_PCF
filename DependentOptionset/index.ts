@@ -1,4 +1,4 @@
-import {IInputs, IOutputs} from "./generated/ManifestTypes";
+import { IInputs, IOutputs } from "./generated/ManifestTypes";
 
 export class DependentOptionset implements ComponentFramework.StandardControl<IInputs, IOutputs> {
 
@@ -10,10 +10,9 @@ export class DependentOptionset implements ComponentFramework.StandardControl<II
     private dependentOptionsetConfiguration: Array<IDependentOptionsetConfiguration>;
     private allOptions: ComponentFramework.PropertyHelper.OptionMetadata[];
 
-	constructor()
-	{
+    constructor() {
 
-	}
+    }
 
     public init(context: ComponentFramework.Context<IInputs>,
         notifyOutputChanged: () => void,
@@ -22,17 +21,17 @@ export class DependentOptionset implements ComponentFramework.StandardControl<II
         this.container = container;
         this.notifyOutputChanged = notifyOutputChanged;
 
-	    let comboBoxContainer = document.createElement("div");
-	    comboBoxContainer.className = "select-wrapper";
+        let comboBoxContainer = document.createElement("div");
+        comboBoxContainer.className = "select-wrapper";
 
-	    this.comboBoxControl = document.createElement("select");
+        this.comboBoxControl = document.createElement("select");
         this.comboBoxControl.className = "dependentOptionset";
-	    this.comboBoxControl.addEventListener("change", this.onChange.bind(this));
-	    this.comboBoxControl.addEventListener("mouseenter", this.onMouseEnter.bind(this));
-	    this.comboBoxControl.addEventListener("mouseleave", this.onMouseLeave.bind(this));
+        this.comboBoxControl.addEventListener("change", this.onChange.bind(this));
+        this.comboBoxControl.addEventListener("mouseenter", this.onMouseEnter.bind(this));
+        this.comboBoxControl.addEventListener("mouseleave", this.onMouseLeave.bind(this));
 
-	    comboBoxContainer.appendChild(this.comboBoxControl);
-	    container.appendChild(comboBoxContainer);
+        comboBoxContainer.appendChild(this.comboBoxControl);
+        container.appendChild(comboBoxContainer);
 
         if (context.parameters.value.attributes == null) {
             return;
@@ -44,34 +43,25 @@ export class DependentOptionset implements ComponentFramework.StandardControl<II
     }
 
     private loadDependentOptionsetConfiguration(context: ComponentFramework.Context<IInputs>) {
-        if (context.parameters.ConfigurationType.raw === "json") {
-            try {
-                this.dependentOptionsetConfiguration = JSON.parse(context.parameters.Configuration.raw);
-                this.renderControl(context);
-            } catch (e) {
-                this.renderError();
-            }
-        } else {
-            const pathToConfiguration = "/WebResources/" + context.parameters.Configuration.raw;
-            let request = new XMLHttpRequest();
-            request.open("GET", pathToConfiguration, true);
-            request.onreadystatechange = () => {
-                if (request.readyState === 4 /* complete */) {
-                    request.onreadystatechange = null;
-                    if (request.status === 200) {
-                        try {
-                            this.dependentOptionsetConfiguration = JSON.parse(request.response);
-                            this.renderControl(context);
-                        } catch (e) {
-                            this.renderError();
-                        }
-                    } else {
+        const pathToConfiguration = "/WebResources/" + context.parameters.Configuration.raw;
+        let request = new XMLHttpRequest();
+        request.open("GET", pathToConfiguration, true);
+        request.onreadystatechange = () => {
+            if (request.readyState === 4 /* complete */) {
+                request.onreadystatechange = null;
+                if (request.status === 200) {
+                    try {
+                        this.dependentOptionsetConfiguration = JSON.parse(request.response);
+                        this.renderControl(context);
+                    } catch (e) {
                         this.renderError();
                     }
+                } else {
+                    this.renderError();
                 }
-            };
-            request.send();
-        }
+            }
+        };
+        request.send();
     }
 
     private onChange(): void {
@@ -167,27 +157,24 @@ export class DependentOptionset implements ComponentFramework.StandardControl<II
         this.container.innerHTML = "Error loading dependency configuration";
     }
 
-	public updateView(context: ComponentFramework.Context<IInputs>): void
-	{
-	    this.renderControl(context);
-	}
+    public updateView(context: ComponentFramework.Context<IInputs>): void {
+        this.renderControl(context);
+    }
 
-	public getOutputs(): IOutputs
-	{
-	    const  result = {
-	        value: this.currentValue,
-	    };
+    public getOutputs(): IOutputs {
+        const result = {
+            value: this.currentValue,
+        };
 
-	    return result;
-	}
+        return result;
+    }
 
-	public destroy(): void
-	{
-		// Add code to cleanup control if necessary
-	}
+    public destroy(): void {
+        // Add code to cleanup control if necessary
+    }
 }
 
 interface IDependentOptionsetConfiguration {
     parentOption: number;
-    childOptions:Array<number>;
+    childOptions: Array<number>;
 }
