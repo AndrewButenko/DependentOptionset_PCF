@@ -1,3 +1,6 @@
+# This repository is Archived and control won't get any updates or fixes
+If you want to use latest and greatest I would highly recommend to take a look at this project - [AB Controls Toolkit](https://github.com/AndrewButenko/ABControlsToolkit)
+
 # Dependent Optionset PCF (PowerApps Component Framework)
 This control is new implementation of classic task with limiting of options available in one optionset depending on the value chosen in second optionset.
 
